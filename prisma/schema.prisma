@@ -1,0 +1,30 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Lead {
+  id             String   @id @default(cuid())
+  reference      String   @unique
+  fullName       String
+  companyName    String
+  email          String
+  phone          String
+  desiredStart   String
+  inspectionDate String?
+  propertyType   String
+  suburb         String
+  postcode       String
+  floorAreaSqm   Int
+  deskCount      Int
+  toggles        String   @default("[]")
+  finishLevel    String
+  budgetLow      Int
+  budgetHigh     Int
+  durationWeeks  String
+  createdAt      DateTime @default(now())
+}

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 210 40" fill="none">
+  <rect width="40" height="40" rx="6" fill="#0F172A"/>
+  <path d="M12 29V11h18v3.8H16.6v3.4h11v4h-11v3.4H30.6V29H12z" fill="#FFFFFF"/>
+  <path d="M25 5l4.4 5.4h-3.6L21.4 5H25z" fill="#F97316"/>
+  <text x="48" y="19" font-family="Inter, system-ui, sans-serif" font-size="13.5" font-weight="800" fill="#0F172A" letter-spacing="-0.2">ELEVATE</text>
+  <text x="48" y="32" font-family="Inter, system-ui, sans-serif" font-size="8" font-weight="500" fill="#64748B" letter-spacing="1.6">COMMERCIAL CONSTRUCTION</text>
+</svg>
