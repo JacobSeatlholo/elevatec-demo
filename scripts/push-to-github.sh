@@ -9,7 +9,7 @@ cd "$(dirname "$0")/.."
 export GIT_SSH_COMMAND="node /home/z/my-project/scripts/git-ssh-wrapper.cjs -i $HOME/.ssh/id_ed25519 -o StrictHostKeyChecking=no"
 
 echo "Testing SSH auth against GitHub..."
-if git ls-remote origin HEAD 2>/dev/null | head -1; then
+if git ls-remote origin HEAD > /dev/null 2>&1; then
   echo "✓ SSH auth OK — pushing main..."
   git push -u origin main
   echo "✓ Pushed to git@github.com:JacobSeatlholo/elevatec-demo.git"
