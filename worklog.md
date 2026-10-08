@@ -45,3 +45,19 @@ Stage Summary:
 - Local git: main @ 8 commits (latest: 8fc31fe rebrand + 19b702e wrapper), remote origin = git@github.com:JacobSeatlholo/elevatec-demo.git
 - Push BLOCKED only by: public key must be added at github.com/settings/ssh/new → then `bash scripts/push-to-github.sh`
 - Public key: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL691EFzFasM38Bld38EF5uwQ4HAx3b9NHBxb0ioxpcU elevatec-demo-sandbox
+
+---
+Task ID: 3
+Agent: main (Super Z)
+Task: Push elevatec-demo to GitHub (user message: "push")
+
+Work Log:
+- Verified git state: clean tree, main @ d7e504a, origin = git@github.com:JacobSeatlholo/elevatec-demo.git
+- Ran scripts/push-to-github.sh (GIT_SSH_COMMAND → node git-ssh-wrapper.cjs with ~/.ssh/id_ed25519)
+- SSH auth OK — key had been registered on GitHub account
+- git push -u origin main succeeded: * [new branch] main -> main
+- Verified via git ls-remote: HEAD = d7e504a on refs/heads/main (matches local)
+
+Stage Summary:
+- Deployment COMPLETE: repo live at github.com/JacobSeatlholo/elevatec-demo (main, d7e504a)
+- All prior work (v1 build, v2 real-brand rebrand) is now on remote
