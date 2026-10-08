@@ -8,11 +8,11 @@ import {
   Building2,
   Check,
   GraduationCap,
+  HardHat,
   MapPin,
   Minus,
   Plus,
   Ruler,
-  Sparkles,
   Stethoscope,
   Store,
   Users,
@@ -32,6 +32,7 @@ import {
   type FinishLevel,
   type PropertyType,
 } from "@/lib/fitout";
+import { MELB_SUBURBS } from "@/lib/melbourne";
 import { OutputPanel } from "./output-panel";
 
 const STEP_META = [
@@ -78,9 +79,25 @@ export function Calculator({ onOpenLead }: { onOpenLead: () => void }) {
     s.setDesks(Math.max(0, Math.min(999, v)));
   };
 
+  const selectSuburb = (value: string) => {
+    const match = MELB_SUBURBS.find(
+      (m) => m.label === value || `${m.suburb} ${m.postcode}` === value
+    );
+    if (match) {
+      s.setSuburb(match.suburb);
+      s.setPostcode(match.postcode);
+    } else {
+      s.setSuburb(value);
+    }
+  };
+
   return (
-    <section id="calculator" className="relative bg-white py-20 lg:py-28" aria-label="Fitout calculator">
-      <div className="blueprint-grid-light pointer-events-none absolute inset-0" />
+    <section
+      id="calculator"
+      className="relative bg-white py-20 lg:py-28"
+      aria-label="Fitout calculator"
+    >
+      <div className="plan-grid-light pointer-events-none absolute inset-0" />
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Section header */}
         <motion.div
@@ -88,27 +105,28 @@ export function Calculator({ onOpenLead }: { onOpenLead: () => void }) {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="mx-auto max-w-2xl text-center"
+          className="max-w-2xl"
         >
-          <span className="inline-flex items-center gap-2 rounded-full bg-brand-soft px-4 py-1.5 text-xs font-bold uppercase tracking-[0.16em] text-brand-deep ring-1 ring-brand/20">
-            <Sparkles className="h-3.5 w-3.5" />
-            60-Second Estimator
-          </span>
-          <h2 className="mt-4 text-3xl font-extrabold tracking-tight text-navy sm:text-4xl lg:text-[2.75rem] lg:leading-[1.1]">
+          <p className="kicker flex items-center gap-3 text-brand">
+            <HardHat className="h-4 w-4" />
+            Pre-Cost Estimates · Delivery Platform 04
+          </p>
+          <h2 className="display-tight mt-4 text-3xl text-ink sm:text-5xl">
             Workplace Fitout Calculator
           </h2>
-          <p className="mt-4 text-base leading-relaxed text-slate-600 sm:text-lg">
-            Configure your space in three steps. Your budget range, build
-            duration, and compliance checklist update in real time.
+          <p className="mt-4 text-base leading-relaxed text-smoke sm:text-lg">
+            Configure your space in three steps. Budget range, build duration
+            and the compliance checklist update live — the same frameworks we
+            apply to Early Contractor Engagement work across Melbourne.
           </p>
         </motion.div>
 
         <div className="mt-12 grid grid-cols-1 gap-8 lg:grid-cols-5 lg:gap-10">
           {/* ------------------------------ Wizard ------------------------------ */}
           <div className="lg:col-span-3">
-            <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-xl shadow-slate-200/60">
+            <div className="overflow-hidden rounded-xl border border-neutral-200 bg-white shadow-xl shadow-black/5">
               {/* Progress header */}
-              <div className="border-b border-slate-100 bg-slate-50/70 px-6 py-4">
+              <div className="border-b border-neutral-100 bg-paper/70 px-6 py-4">
                 <div className="flex items-center justify-between gap-2">
                   {STEP_META.map((m) => {
                     const active = step === m.n;
@@ -125,28 +143,28 @@ export function Calculator({ onOpenLead }: { onOpenLead: () => void }) {
                             done
                               ? "bg-brand text-white"
                               : active
-                                ? "bg-navy text-white ring-4 ring-navy/15"
-                                : "bg-slate-200 text-slate-500 group-hover:bg-slate-300"
+                                ? "bg-ink text-white ring-4 ring-ink/10"
+                                : "bg-neutral-200 text-neutral-500 group-hover:bg-neutral-300"
                           }`}
                         >
                           {done ? <Check className="h-4 w-4" /> : m.n}
                         </span>
                         <span
                           className={`hidden text-xs font-semibold sm:block ${
-                            active ? "text-navy" : "text-slate-500"
+                            active ? "text-ink" : "text-neutral-500"
                           }`}
                         >
                           {m.title}
                         </span>
                         {m.n < 3 && (
-                          <span className="mx-1 hidden h-px flex-1 bg-slate-200 sm:block" />
+                          <span className="mx-1 hidden h-px flex-1 bg-neutral-200 sm:block" />
                         )}
                       </button>
                     );
                   })}
                 </div>
                 {/* mobile progress bar */}
-                <div className="mt-3 h-1 overflow-hidden rounded-full bg-slate-200 sm:hidden">
+                <div className="mt-3 h-1 overflow-hidden rounded-full bg-neutral-200 sm:hidden">
                   <motion.div
                     className="h-full bg-brand"
                     animate={{ width: `${(step / 3) * 100}%` }}
@@ -168,7 +186,7 @@ export function Calculator({ onOpenLead }: { onOpenLead: () => void }) {
                       exit="exit"
                       transition={{ duration: 0.35, ease: "easeOut" }}
                     >
-                      <h3 className="flex items-center gap-2.5 text-lg font-bold text-navy">
+                      <h3 className="flex items-center gap-2.5 text-lg font-bold text-ink">
                         <Building2 className="h-5 w-5 text-brand" />
                         What type of property are you fitting out?
                       </h3>
@@ -178,27 +196,29 @@ export function Calculator({ onOpenLead }: { onOpenLead: () => void }) {
                           return (
                             <button
                               key={p.value}
-                              onClick={() => s.setPropertyType(p.value as PropertyType)}
+                              onClick={() =>
+                                s.setPropertyType(p.value as PropertyType)
+                              }
                               aria-pressed={active}
-                              className={`group relative rounded-xl border-2 p-4 text-left transition-all duration-200 ${
+                              className={`group relative rounded-lg border-2 p-4 text-left transition-all duration-200 ${
                                 active
-                                  ? "border-brand bg-brand-soft shadow-md shadow-brand/10"
-                                  : "border-slate-200 bg-white hover:border-slate-300 hover:shadow-sm"
+                                  ? "border-brand bg-brand-soft"
+                                  : "border-neutral-200 bg-white hover:border-neutral-300 hover:shadow-sm"
                               }`}
                             >
                               <div
-                                className={`flex h-10 w-10 items-center justify-center rounded-lg transition-colors ${
+                                className={`flex h-10 w-10 items-center justify-center rounded-md transition-colors ${
                                   active
                                     ? "bg-brand text-white"
-                                    : "bg-slate-100 text-charcoal group-hover:bg-slate-200"
+                                    : "bg-neutral-100 text-coal group-hover:bg-neutral-200"
                                 }`}
                               >
                                 {PROPERTY_ICONS[p.value]}
                               </div>
-                              <div className="mt-3 text-sm font-bold text-navy">
+                              <div className="mt-3 text-sm font-bold text-ink">
                                 {p.label}
                               </div>
-                              <div className="mt-1 text-xs leading-relaxed text-slate-500">
+                              <div className="mt-1 text-xs leading-relaxed text-smoke">
                                 {p.blurb}
                               </div>
                               {active && (
@@ -209,25 +229,40 @@ export function Calculator({ onOpenLead }: { onOpenLead: () => void }) {
                         })}
                       </div>
 
-                      <h3 className="mt-8 flex items-center gap-2.5 text-lg font-bold text-navy">
+                      <h3 className="mt-8 flex items-center gap-2.5 text-lg font-bold text-ink">
                         <MapPin className="h-5 w-5 text-brand" />
                         Where is your site located?
                       </h3>
                       <div className="mt-4 grid gap-3 sm:grid-cols-[1fr_140px]">
                         <div>
-                          <label htmlFor="suburb" className="mb-1.5 block text-xs font-semibold text-slate-600">
+                          <label
+                            htmlFor="suburb"
+                            className="mb-1.5 block text-xs font-semibold text-neutral-600"
+                          >
                             Suburb
                           </label>
                           <Input
                             id="suburb"
                             value={s.suburb}
-                            onChange={(e) => s.setSuburb(e.target.value)}
+                            onChange={(e) => selectSuburb(e.target.value)}
                             placeholder="e.g. Docklands"
-                            className="h-11 border-slate-300 focus-visible:ring-brand"
+                            className="h-11 border-neutral-300 focus-visible:ring-brand"
+                            list="melb-suburbs"
+                            autoComplete="off"
                           />
+                          <datalist id="melb-suburbs">
+                            {MELB_SUBURBS.map((m) => (
+                              <option key={m.postcode} value={m.label}>
+                                {m.label}
+                              </option>
+                            ))}
+                          </datalist>
                         </div>
                         <div>
-                          <label htmlFor="postcode" className="mb-1.5 block text-xs font-semibold text-slate-600">
+                          <label
+                            htmlFor="postcode"
+                            className="mb-1.5 block text-xs font-semibold text-neutral-600"
+                          >
                             Postcode
                           </label>
                           <Input
@@ -239,13 +274,14 @@ export function Calculator({ onOpenLead }: { onOpenLead: () => void }) {
                               s.setPostcode(e.target.value.replace(/\D/g, ""))
                             }
                             placeholder="3000"
-                            className="h-11 border-slate-300 focus-visible:ring-brand"
+                            className="h-11 border-neutral-300 focus-visible:ring-brand"
                           />
                         </div>
                       </div>
-                      <p className="mt-2.5 text-xs text-slate-400">
-                        Default service area: Melbourne Metro — we also deliver
-                        across Regional Victoria.
+                      <p className="mt-2.5 text-xs text-neutral-400">
+                        We deliver across Metropolitan Melbourne and Regional
+                        Victoria — from the CBD and Docklands through to
+                        Geelong, Ballarat and Bendigo.
                       </p>
                     </motion.div>
                   )}
@@ -260,7 +296,7 @@ export function Calculator({ onOpenLead }: { onOpenLead: () => void }) {
                       exit="exit"
                       transition={{ duration: 0.35, ease: "easeOut" }}
                     >
-                      <h3 className="flex items-center gap-2.5 text-lg font-bold text-navy">
+                      <h3 className="flex items-center gap-2.5 text-lg font-bold text-ink">
                         <Ruler className="h-5 w-5 text-brand" />
                         How large is your floor plate?
                       </h3>
@@ -271,26 +307,27 @@ export function Calculator({ onOpenLead }: { onOpenLead: () => void }) {
                           <div className="flex items-baseline gap-1.5">
                             <motion.span
                               key={s.floorArea}
-                              initial={{ scale: 1.08, color: "#F97316" }}
-                              animate={{ scale: 1, color: "#0F172A" }}
+                              initial={{ scale: 1.08, color: "#f26722" }}
+                              animate={{ scale: 1, color: "#0a0a0a" }}
                               transition={{ duration: 0.3 }}
                               className="text-5xl font-extrabold tracking-tight"
                             >
                               {s.floorArea.toLocaleString()}
                             </motion.span>
-                            <span className="text-lg font-semibold text-slate-400">
+                            <span className="text-lg font-semibold text-neutral-400">
                               sqm
                             </span>
                           </div>
-                          <div className="mt-1 text-xs text-slate-400">
-                            ≈ {Math.round(s.floorArea * 10.764).toLocaleString()} sq ft
+                          <div className="mt-1 text-xs text-neutral-400">
+                            ≈ {Math.round(s.floorArea * 10.764).toLocaleString()}{" "}
+                            sq ft
                           </div>
                         </div>
                         <div className="text-right">
-                          <div className="text-sm font-semibold text-navy">
+                          <div className="text-sm font-semibold text-ink">
                             {s.desks} desks
                           </div>
-                          <div className="text-[11px] text-slate-400">
+                          <div className="text-[11px] text-neutral-400">
                             {desksAuto ? "auto-suggested" : "manually set"}
                           </div>
                         </div>
@@ -305,7 +342,7 @@ export function Calculator({ onOpenLead }: { onOpenLead: () => void }) {
                         className="mt-6 [&_[data-slot=slider-range]]:bg-brand [&_[data-slot=slider-thumb]]:border-brand [&_[data-slot=slider-thumb]]:bg-white"
                         aria-label="Floor area in square metres"
                       />
-                      <div className="mt-2 flex justify-between text-[11px] font-medium text-slate-400">
+                      <div className="mt-2 flex justify-between text-[11px] font-medium text-neutral-400">
                         <span>50 sqm</span>
                         <span>1,000</span>
                         <span>2,000</span>
@@ -313,16 +350,17 @@ export function Calculator({ onOpenLead }: { onOpenLead: () => void }) {
                       </div>
 
                       {/* Desk stepper */}
-                      <div className="mt-7 rounded-xl border border-slate-200 bg-slate-50/60 p-4">
+                      <div className="mt-7 rounded-lg border border-neutral-200 bg-paper/60 p-4">
                         <div className="flex items-center justify-between gap-4">
                           <div className="flex items-center gap-2.5">
                             <Users className="h-5 w-5 text-brand" />
                             <div>
-                              <div className="text-sm font-bold text-navy">
+                              <div className="text-sm font-bold text-ink">
                                 Desks / Workstations
                               </div>
-                              <div className="text-xs text-slate-500">
-                                Headcount drives booth counts &amp; density metrics
+                              <div className="text-xs text-smoke">
+                                Headcount drives booth counts &amp; density
+                                metrics
                               </div>
                             </div>
                           </div>
@@ -330,7 +368,7 @@ export function Calculator({ onOpenLead }: { onOpenLead: () => void }) {
                             <Button
                               variant="outline"
                               size="icon"
-                              className="h-10 w-10 border-slate-300"
+                              className="h-10 w-10 border-neutral-300"
                               onClick={() => setDesksManual(s.desks - 1)}
                               aria-label="Remove one desk"
                             >
@@ -339,16 +377,18 @@ export function Calculator({ onOpenLead }: { onOpenLead: () => void }) {
                             <input
                               value={s.desks}
                               onChange={(e) =>
-                                setDesksManual(parseInt(e.target.value || "0", 10))
+                                setDesksManual(
+                                  parseInt(e.target.value || "0", 10)
+                                )
                               }
                               inputMode="numeric"
-                              className="h-10 w-14 rounded-md border border-slate-300 text-center text-sm font-bold text-navy focus:outline-none focus:ring-2 focus:ring-brand"
+                              className="h-10 w-14 rounded-md border border-neutral-300 text-center text-sm font-bold text-ink focus:outline-none focus:ring-2 focus:ring-brand"
                               aria-label="Number of desks"
                             />
                             <Button
                               variant="outline"
                               size="icon"
-                              className="h-10 w-10 border-slate-300"
+                              className="h-10 w-10 border-neutral-300"
                               onClick={() => setDesksManual(s.desks + 1)}
                               aria-label="Add one desk"
                             >
@@ -359,7 +399,7 @@ export function Calculator({ onOpenLead }: { onOpenLead: () => void }) {
                       </div>
 
                       {/* Toggles */}
-                      <h3 className="mt-8 text-lg font-bold text-navy">
+                      <h3 className="mt-8 text-lg font-bold text-ink">
                         Layout additions
                       </h3>
                       <div className="mt-3 grid grid-cols-1 gap-2.5">
@@ -368,17 +408,17 @@ export function Calculator({ onOpenLead }: { onOpenLead: () => void }) {
                           return (
                             <div
                               key={t.key}
-                              className={`flex items-center justify-between gap-3 rounded-xl border p-3.5 transition-all duration-200 ${
+                              className={`flex items-center justify-between gap-3 rounded-lg border p-3.5 transition-all duration-200 ${
                                 on
                                   ? "border-brand/50 bg-brand-soft"
-                                  : "border-slate-200 bg-white"
+                                  : "border-neutral-200 bg-white"
                               }`}
                             >
                               <div className="min-w-0">
-                                <div className="text-sm font-semibold text-navy">
+                                <div className="text-sm font-semibold text-ink">
                                   {t.label}
                                 </div>
-                                <div className="truncate text-xs text-slate-500">
+                                <div className="truncate text-xs text-smoke">
                                   {t.blurb}
                                 </div>
                               </div>
@@ -410,8 +450,8 @@ export function Calculator({ onOpenLead }: { onOpenLead: () => void }) {
                       exit="exit"
                       transition={{ duration: 0.35, ease: "easeOut" }}
                     >
-                      <h3 className="flex items-center gap-2.5 text-lg font-bold text-navy">
-                        <Sparkles className="h-5 w-5 text-brand" />
+                      <h3 className="flex items-center gap-2.5 text-lg font-bold text-ink">
+                        <Ruler className="h-5 w-5 text-brand" />
                         Choose your finish level
                       </h3>
                       <div className="mt-5 grid grid-cols-1 gap-3">
@@ -423,21 +463,21 @@ export function Calculator({ onOpenLead }: { onOpenLead: () => void }) {
                               key={f.value}
                               onClick={() => s.setFinish(f.value as FinishLevel)}
                               aria-pressed={active}
-                              className={`relative min-w-0 rounded-xl border-2 p-4 text-left transition-all duration-200 sm:p-5 ${
+                              className={`relative min-w-0 rounded-lg border-2 p-4 text-left transition-all duration-200 sm:p-5 ${
                                 active
-                                  ? "border-brand bg-brand-soft shadow-md shadow-brand/10"
-                                  : "border-slate-200 bg-white hover:border-slate-300 hover:shadow-sm"
+                                  ? "border-brand bg-brand-soft"
+                                  : "border-neutral-200 bg-white hover:border-neutral-300 hover:shadow-sm"
                               }`}
                             >
                               <div className="flex flex-wrap items-center justify-between gap-x-2 gap-y-1.5">
-                                <div className="text-base font-bold text-navy">
+                                <div className="text-base font-bold text-ink">
                                   {f.label}
                                 </div>
                                 <div
                                   className={`rounded-full px-3 py-1 text-sm font-extrabold ${
                                     active
                                       ? "bg-brand text-white"
-                                      : "bg-slate-100 text-charcoal"
+                                      : "bg-neutral-100 text-coal"
                                   }`}
                                 >
                                   ${f.low}–${f.high}
@@ -446,20 +486,23 @@ export function Calculator({ onOpenLead }: { onOpenLead: () => void }) {
                                   </span>
                                 </div>
                               </div>
-                              <div className="mt-1.5 text-xs font-medium text-slate-500">
+                              <div className="mt-1.5 text-xs font-medium text-smoke">
                                 {f.blurb}
                               </div>
-                              <ul className="mt-3 grid gap-1.5 text-xs text-slate-600 sm:grid-cols-2">
+                              <ul className="mt-3 grid gap-1.5 text-xs text-neutral-600 sm:grid-cols-2">
                                 {f.inclusions.map((inc) => (
-                                  <li key={inc} className="flex items-start gap-1.5">
+                                  <li
+                                    key={inc}
+                                    className="flex items-start gap-1.5"
+                                  >
                                     <Check className="mt-0.5 h-3 w-3 shrink-0 text-brand" />
                                     {inc}
                                   </li>
                                 ))}
                               </ul>
                               {popular && (
-                                <span className="absolute -top-2.5 right-4 rounded-full bg-navy px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-brand">
-                                  Most Popular
+                                <span className="absolute -top-2.5 right-4 rounded-full bg-ink px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-brand">
+                                  Most Specified
                                 </span>
                               )}
                             </button>
@@ -472,23 +515,23 @@ export function Calculator({ onOpenLead }: { onOpenLead: () => void }) {
               </div>
 
               {/* Nav footer */}
-              <div className="flex items-center justify-between border-t border-slate-100 bg-slate-50/70 px-6 py-4 sm:px-8">
+              <div className="flex items-center justify-between border-t border-neutral-100 bg-paper/70 px-6 py-4 sm:px-8">
                 <Button
                   variant="ghost"
                   onClick={() => setStep((v) => Math.max(1, v - 1))}
                   disabled={step === 1}
-                  className="font-semibold text-slate-600 hover:text-navy"
+                  className="font-semibold text-neutral-600 hover:text-ink"
                 >
                   <ArrowLeft className="mr-1.5 h-4 w-4" />
                   Back
                 </Button>
-                <div className="text-xs font-semibold text-slate-400">
+                <div className="text-xs font-semibold text-neutral-400">
                   Step {step} of 3
                 </div>
                 {step < 3 ? (
                   <Button
                     onClick={() => setStep((v) => Math.min(3, v + 1))}
-                    className="bg-navy font-semibold text-white hover:bg-charcoal"
+                    className="bg-ink font-semibold text-white hover:bg-coal"
                   >
                     Continue
                     <ArrowRight className="ml-1.5 h-4 w-4" />
@@ -496,7 +539,7 @@ export function Calculator({ onOpenLead }: { onOpenLead: () => void }) {
                 ) : (
                   <Button
                     onClick={onOpenLead}
-                    className="bg-brand font-bold text-white shadow-lg shadow-brand/25 hover:bg-brand-deep"
+                    className="bg-brand font-bold text-white hover:bg-brand-deep"
                   >
                     Lock In Budget
                     <ArrowRight className="ml-1.5 h-4 w-4" />
@@ -506,9 +549,9 @@ export function Calculator({ onOpenLead }: { onOpenLead: () => void }) {
             </div>
 
             {/* Live hint under card (mobile-friendly) */}
-            <p className="mt-4 text-center text-xs text-slate-400 lg:hidden">
+            <p className="mt-4 text-center text-xs text-neutral-400 lg:hidden">
               Current live estimate:{" "}
-              <span className="font-bold text-navy">
+              <span className="font-bold text-ink">
                 {formatAUD(estimate.budgetLow)} – {formatAUD(estimate.budgetHigh)}
               </span>{" "}
               · {estimate.durationLowWeeks}–{estimate.durationHighWeeks} weeks

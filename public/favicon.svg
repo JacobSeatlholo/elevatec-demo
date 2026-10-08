@@ -1,5 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none">
-  <rect width="48" height="48" rx="8" fill="#0F172A"/>
-  <path d="M14 34V14h18v4.2H19.2v3.6h11v4.2h-11v3.8H32.5V34H14z" fill="#FFFFFF"/>
-  <path d="M27 8l5 6h-4l-5-6h4z" fill="#F97316"/>
-</svg>
+<?xml version="1.0" encoding="UTF-8"?><svg xmlns="http://www.w3.org/2000/svg" viewBox="-8 -8 104 120"><rect x="-8" y="-8" width="104" height="120" rx="14" fill="#0a0a0a"/><polygon points="58.5462 7.1475 29.2731 14.295 0 7.1475 0 30.6228 29.2731 37.7703 58.5462 30.6228 87.8193 23.4753 87.8193 0 58.5462 7.1475" style="fill:#f26722;"/><polygon points="29.2731 48.048 0 40.9005 0 64.3758 29.2731 71.5233 75.956 60.1147 75.956 36.6393 29.2731 48.048" style="fill:#f26722;"/><polygon points="58.5462 73.4514 29.2731 80.5989 0 73.4514 0 96.9267 29.2731 104.0743 58.5462 96.9267 87.8193 89.7792 87.8193 66.3039 58.5462 73.4514" style="fill:#f26722;"/></svg>

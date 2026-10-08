@@ -21,10 +21,10 @@ export function downloadEstimatePDF(input: FitoutInput, reference?: string) {
 
   const doc = new jsPDF({ unit: "mm", format: "a4" });
   const W = doc.internal.pageSize.getWidth();
-  const NAVY: [number, number, number] = [15, 23, 42];
-  const BRAND: [number, number, number] = [249, 115, 22];
-  const GREY: [number, number, number] = [100, 116, 139];
-  const LINE: [number, number, number] = [226, 232, 240];
+  const NAVY: [number, number, number] = [10, 10, 10];
+  const BRAND: [number, number, number] = [242, 103, 34];
+  const GREY: [number, number, number] = [90, 90, 95];
+  const LINE: [number, number, number] = [228, 226, 223];
 
   /* Header band ------------------------------------------------------ */
   doc.setFillColor(...NAVY);
@@ -42,19 +42,19 @@ export function downloadEstimatePDF(input: FitoutInput, reference?: string) {
 
   doc.setFont("helvetica", "normal");
   doc.setFontSize(9);
-  doc.setTextColor(180, 190, 205);
+  doc.setTextColor(185, 180, 175);
   doc.text(
     "Precision Commercial Fitouts & Workplace Solutions | Melbourne, VIC",
     14,
     22
   );
-  doc.text("m 0401 933 088  |  info@elevatec.com.au", 14, 27.5);
+  doc.text("m 0401 933 088  |  info@elevatec.com.au  |  elevatec.com.au", 14, 27.5);
 
   doc.setFont("helvetica", "bold");
   doc.setFontSize(9);
   doc.setTextColor(...BRAND);
   if (reference) doc.text(`REF: ${reference}`, W - 14, 15, { align: "right" });
-  doc.setTextColor(180, 190, 205);
+  doc.setTextColor(185, 180, 175);
   doc.setFont("helvetica", "normal");
   doc.text(
     `Generated ${new Date().toLocaleDateString("en-AU", {
@@ -114,7 +114,7 @@ export function downloadEstimatePDF(input: FitoutInput, reference?: string) {
 
   /* Budget block ----------------------------------------------------- */
   y += 3;
-  doc.setFillColor(248, 250, 252);
+  doc.setFillColor(246, 245, 243);
   doc.roundedRect(14, y, W - 28, 30, 2.5, 2.5, "F");
   y += 9;
   doc.setFontSize(8);
@@ -195,7 +195,7 @@ export function downloadEstimatePDF(input: FitoutInput, reference?: string) {
     { maxWidth: W - 28 }
   );
   doc.text(
-    "Registered Builder CCB-L 100313 | CB-U 41950   ·   Melbourne Metro & Regional Victoria",
+    "O'Callaghan Building and Maintenance Pty Ltd T/A Elevate Commercial Construction · CCB-L 100313 · CB-U 41950",
     14,
     footerY + 3.5
   );

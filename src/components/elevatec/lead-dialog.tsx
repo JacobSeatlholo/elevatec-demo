@@ -201,26 +201,26 @@ export function LeadDialog({
                   <ShieldCheck className="h-3 w-3" />
                   Free · No obligation
                 </div>
-                <DialogTitle className="text-2xl font-extrabold tracking-tight text-navy">
+                <DialogTitle className="text-2xl font-extrabold tracking-tight text-ink">
                   Lock In Budget &amp; Request Detailed Scope
                 </DialogTitle>
-                <DialogDescription className="text-sm leading-relaxed text-slate-500">
+                <DialogDescription className="text-sm leading-relaxed text-smoke">
                   A senior estimator will review your configuration and call
                   within one business day to arrange your on-site audit.
                 </DialogDescription>
               </DialogHeader>
 
               {/* Estimate snapshot */}
-              <div className="mt-5 rounded-xl border border-slate-200 bg-slate-50 p-4">
+              <div className="mt-5 rounded-lg border border-neutral-200 bg-paper p-4">
                 <div className="flex flex-wrap items-center justify-between gap-2">
-                  <div className="text-xs font-semibold uppercase tracking-wide text-slate-400">
+                  <div className="text-xs font-semibold uppercase tracking-wide text-neutral-400">
                     Your configuration
                   </div>
                   <div className="text-sm font-extrabold text-brand">
                     {formatAUD(estimate.budgetLow)} – {formatAUD(estimate.budgetHigh)}
                   </div>
                 </div>
-                <div className="mt-2 text-xs leading-relaxed text-slate-600">
+                <div className="mt-2 text-xs leading-relaxed text-neutral-600">
                   {propertyMeta.label} · {s.floorArea.toLocaleString()} sqm ·{" "}
                   {s.desks} desks · {finishMeta.label} ·{" "}
                   {estimate.durationLowWeeks}–{estimate.durationHighWeeks} weeks
@@ -232,7 +232,7 @@ export function LeadDialog({
               <form onSubmit={handleSubmit} className="mt-5 space-y-4" noValidate>
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                   <div className="space-y-1.5">
-                    <Label htmlFor="fullName" className="text-xs font-semibold text-charcoal">
+                    <Label htmlFor="fullName" className="text-xs font-semibold text-coal">
                       Full Name *
                     </Label>
                     <div className="relative">
@@ -251,7 +251,7 @@ export function LeadDialog({
                     )}
                   </div>
                   <div className="space-y-1.5">
-                    <Label htmlFor="companyName" className="text-xs font-semibold text-charcoal">
+                    <Label htmlFor="companyName" className="text-xs font-semibold text-coal">
                       Company Name *
                     </Label>
                     <div className="relative">
@@ -273,7 +273,7 @@ export function LeadDialog({
 
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                   <div className="space-y-1.5">
-                    <Label htmlFor="email" className="text-xs font-semibold text-charcoal">
+                    <Label htmlFor="email" className="text-xs font-semibold text-coal">
                       Email *
                     </Label>
                     <div className="relative">
@@ -293,7 +293,7 @@ export function LeadDialog({
                     )}
                   </div>
                   <div className="space-y-1.5">
-                    <Label htmlFor="phone" className="text-xs font-semibold text-charcoal">
+                    <Label htmlFor="phone" className="text-xs font-semibold text-coal">
                       Phone Number *
                     </Label>
                     <div className="relative">
@@ -317,7 +317,7 @@ export function LeadDialog({
                 {/* Desired start + inspection date */}
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                   <div className="space-y-1.5">
-                    <Label className="text-xs font-semibold text-charcoal">
+                    <Label className="text-xs font-semibold text-coal">
                       Desired Start Date *
                     </Label>
                     <Select value={desiredStart} onValueChange={setDesiredStart}>
@@ -340,7 +340,7 @@ export function LeadDialog({
                     )}
                   </div>
                   <div className="space-y-1.5">
-                    <Label className="text-xs font-semibold text-charcoal">
+                    <Label className="text-xs font-semibold text-coal">
                       On-Site Inspection Date
                     </Label>
                     <Popover>
@@ -395,10 +395,11 @@ export function LeadDialog({
                     </>
                   )}
                 </Button>
-                <p className="text-center text-[11px] leading-relaxed text-slate-400">
+                <p className="text-center text-[11px] leading-relaxed text-neutral-400">
                   By submitting you agree to be contacted about your project.
-                  We never share your details. ABN-registered builder, fully
-                  insured.
+                  We never share your details — O&rsquo;Callaghan Building and
+                  Maintenance Pty Ltd trading as Elevate Commercial
+                  Construction, registered commercial builder CCB-L 100313.
                 </p>
               </form>
             </motion.div>
@@ -421,39 +422,39 @@ export function LeadDialog({
               </motion.div>
 
               <DialogHeader className="mt-4 text-center sm:text-center">
-                <DialogTitle className="text-2xl font-extrabold tracking-tight text-navy">
+                <DialogTitle className="text-2xl font-extrabold tracking-tight text-ink">
                   You&apos;re locked in, {submitted.firstName}!
                 </DialogTitle>
-                <DialogDescription className="mx-auto max-w-sm text-sm leading-relaxed text-slate-500">
+                <DialogDescription className="mx-auto max-w-sm text-sm leading-relaxed text-smoke">
                   Your estimate and scope request have been received. A senior
                   estimator from Elevate will call you within one business day
                   to confirm your on-site audit.
                 </DialogDescription>
               </DialogHeader>
 
-              <div className="mx-auto mt-5 max-w-sm space-y-3 rounded-xl border border-slate-200 bg-slate-50 p-4 text-left">
+              <div className="mx-auto mt-5 max-w-sm space-y-3 rounded-lg border border-neutral-200 bg-paper p-4 text-left">
                 <div className="flex items-center justify-between text-sm">
-                  <span className="text-slate-500">Reference</span>
-                  <span className="font-extrabold tracking-wide text-navy">
+                  <span className="text-neutral-500">Reference</span>
+                  <span className="font-extrabold tracking-wide text-ink">
                     {submitted.reference}
                   </span>
                 </div>
                 <div className="flex items-center justify-between text-sm">
-                  <span className="text-slate-500">Locked budget range</span>
+                  <span className="text-neutral-500">Locked budget range</span>
                   <span className="font-bold text-brand">
                     {formatAUD(estimate.budgetLow)} – {formatAUD(estimate.budgetHigh)}
                   </span>
                 </div>
                 <div className="flex items-center justify-between text-sm">
-                  <span className="text-slate-500">Est. duration</span>
-                  <span className="font-bold text-navy">
+                  <span className="text-neutral-500">Est. duration</span>
+                  <span className="font-bold text-ink">
                     {estimate.durationLowWeeks}–{estimate.durationHighWeeks} weeks
                   </span>
                 </div>
                 {inspectionDate && (
                   <div className="flex items-center justify-between text-sm">
-                    <span className="text-slate-500">Requested audit date</span>
-                    <span className="inline-flex items-center gap-1 font-bold text-navy">
+                    <span className="text-neutral-500">Requested audit date</span>
+                    <span className="inline-flex items-center gap-1 font-bold text-ink">
                       <CalendarCheck2 className="h-4 w-4 text-brand" />
                       {format(inspectionDate, "d MMM yyyy")}
                     </span>
@@ -483,7 +484,7 @@ export function LeadDialog({
                     submitted.reference
                   )
                 }
-                className="mt-5 h-12 w-full bg-navy text-base font-bold text-white transition-colors hover:bg-charcoal"
+                className="mt-5 h-12 w-full bg-ink text-base font-bold text-white transition-colors hover:bg-coal"
               >
                 <Download className="mr-2 h-5 w-5 text-brand" />
                 Download PDF Summary
@@ -491,7 +492,7 @@ export function LeadDialog({
               <Button
                 variant="ghost"
                 onClick={() => closeDialog(false)}
-                className="mt-2 w-full text-sm font-semibold text-slate-500 hover:text-navy"
+                className="mt-2 w-full text-sm font-semibold text-neutral-500 hover:text-ink"
               >
                 Done
               </Button>
